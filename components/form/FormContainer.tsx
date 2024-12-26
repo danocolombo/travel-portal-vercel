@@ -23,7 +23,7 @@ function FormContainer({
             toast({ description: state.message });
         }
         console.log('FC:25-->useEffect');
-    }, [state]);
+    }, [state, toast]);
     return <form action={formAction}>{children}</form>;
 }
 export default FormContainer;

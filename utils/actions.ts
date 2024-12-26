@@ -123,7 +123,8 @@ export const updateProfileImageAction = async (
     try {
         const image = formData.get('image') as File;
         const validatedFields = validateWithZodSchema(imageSchema, { image });
-        const fullPath = await uploadImage(validatedFields.image);
+        const fullPath = await uploadImage(validatedFields.image as File);
+
         await db.profile.update({
             where: {
                 clerkId: user.id,
@@ -152,7 +153,7 @@ export const createPropertyAction = async (
         const validatedFile = validateWithZodSchema(imageSchema, {
             image: file,
         });
-        const fullpath = await uploadImage(validatedFile.image);
+        const fullpath = await uploadImage(validatedFile.image as File);
         await db.property.create({
             data: {
                 ...validatedFields,
@@ -189,7 +190,6 @@ export const fetchProperties = async ({
             country: true,
             image: true,
             price: true,
-            image: true,
         },
         orderBy: {
             createdAt: 'desc',

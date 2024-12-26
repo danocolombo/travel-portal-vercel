@@ -40,12 +40,16 @@ function validateFile() {
     return z
         .instanceof(typeof File !== 'undefined' ? File : Object)
         .refine((file) => {
-            return !file || file?.size <= maxUploadSize;
+            return (
+                !file || (file instanceof File && file.size <= maxUploadSize)
+            );
         }, 'File size must be less than 1 MB')
         .refine((file) => {
             return (
                 !file ||
-                acceptedFilesTypes.some((type) => file?.type?.startsWith(type))
+                acceptedFilesTypes.some(
+                    (type) => file instanceof File && file.type.startsWith(type)
+                )
             );
         }, 'File must be an image');
 }
