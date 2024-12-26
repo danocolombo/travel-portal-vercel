@@ -9,7 +9,7 @@ async function PropertyRating({
 }) {
     // const { rating, count } = await fetchPropertyRating(propertyId);
     const rating = 4.8;
-    const count = 88;
+    const count: number = 88;
 
     // if (count === 0) return null;
     const className = `flex gap-1 items-center ${
