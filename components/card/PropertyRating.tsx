@@ -1,4 +1,3 @@
-import { fetchPropertyRating } from '@/utils/actions';
 import { FaStar } from 'react-icons/fa';
 
 async function PropertyRating({
