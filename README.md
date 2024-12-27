@@ -28,3 +28,7 @@ Udemy - Mastering Next.js
     if you make changes to local prisma/schema.prisma to push to database (migrate)...
     <code>npx prisma db push
     </code>
+
+## REMEMBER - Do a local build before checking into main.
+
+<code>npm run build</code>
