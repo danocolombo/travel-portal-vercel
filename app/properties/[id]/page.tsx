@@ -34,7 +34,6 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
     const profileImage = property.profile.profileImage;
     return (
         <section>
-            <h2>PropertyDetailsPage</h2>
             <BreadCrumbs name={property.name} />
             <header className='flex justify-between items-center mt-4'>
                 <h1 className='text-4xl font-bold capitalize'>
