@@ -4,10 +4,16 @@ import { Textarea } from '@/components/ui/textarea';
 type TextAreaInputProps = {
     name: string;
     labelText?: string;
+    rows?: number;
     defaultValue?: string;
 };
 
-function TextAreaInput({ name, labelText, defaultValue }: TextAreaInputProps) {
+function TextAreaInput({
+    name,
+    labelText,
+    defaultValue,
+    rows = 5,
+}: TextAreaInputProps) {
     return (
         <div className='mb-2'>
             <Label htmlFor={name} className='capitalize'>
@@ -17,7 +23,7 @@ function TextAreaInput({ name, labelText, defaultValue }: TextAreaInputProps) {
                 id={name}
                 name={name}
                 defaultValue={defaultValue || tempDefaultDescription}
-                rows={5}
+                rows={rows}
                 required
                 className='leading-loose'
             />
