@@ -5,7 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { SignInButton } from '@clerk/nextjs';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import { LuTrash2, LuPencil } from 'react-icons/lu';
+import { FaRegTrashCan, FaPenToSquare } from 'react-icons/fa6';
 
 // these types provide the ability to set
 // values as enums. Props will default to 'sm'
@@ -87,9 +87,9 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
     const renderIcon = () => {
         switch (actionType) {
             case 'edit':
-                return <LuPencil />;
+                return <FaPenToSquare />;
             case 'delete':
-                return <LuTrash2 />;
+                return <FaRegTrashCan />;
             default:
                 const never: never = actionType;
                 throw new Error(`Invalid action type: ${never}`);
