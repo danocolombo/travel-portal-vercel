@@ -9,6 +9,13 @@ async function FavoritesPage() {
         return <EmptyList />;
     }
 
-    return <PropertiesList properties={favorites} />;
+    return (
+        <div>
+            <header className='flex justify-between items-center mt-4'>
+                <h1 className='text-4xl font-bold capitalize'>Favorites</h1>
+            </header>
+            <PropertiesList properties={favorites} />
+        </div>
+    );
 }
 export default FavoritesPage;
