@@ -12,6 +12,7 @@ import db from './db';
 import { revalidatePath } from 'next/cache';
 
 import { uploadImage } from './supabase';
+import { calculateTotals } from './calculateTotals';
 
 const renderError = (error: unknown): { message: string } => {
     console.log(error);
@@ -272,6 +273,12 @@ export const fetchPropertyDetails = (id: string) => {
         },
         include: {
             profile: true,
+            bookings: {
+                select: {
+                    checkIn: true,
+                    checkOut: true,
+                },
+            },
         },
     });
 };
@@ -394,4 +401,44 @@ export const findExistingReview = async (
             propertyId: propertyId,
         },
     });
+};
+
+export const createBookingAction = async (prevState: {
+    propertyId: string;
+    checkIn: Date;
+    checkOut: Date;
+}) => {
+    const user = await getAuthUser();
+    //* NOTE: We do not trust any price from the frontend, since
+    //* it can be manipulated by the user. We fetch the price from
+    //* the database to ensure it is accurate and calculate the total
+    const { propertyId, checkIn, checkOut } = prevState;
+    const property = await db.property.findUnique({
+        where: { id: propertyId },
+        select: { price: true },
+    });
+    if (!property) {
+        return { message: 'Property not found' };
+    }
+    const { reservationTotal, nights } = calculateTotals({
+        checkIn,
+        checkOut,
+        price: property.price,
+    });
+
+    try {
+        const booking = await db.booking.create({
+            data: {
+                checkIn,
+                checkOut,
+                orderTotal: reservationTotal,
+                totalNights: nights,
+                profileId: user.id,
+                propertyId,
+            },
+        });
+    } catch (error) {
+        return renderError(error);
+    }
+    redirect('/bookings');
 };
