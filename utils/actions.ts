@@ -15,7 +15,6 @@ import { uploadImage } from './supabase';
 import { calculateTotals } from './calculateTotals';
 
 const renderError = (error: unknown): { message: string } => {
-    console.log(error);
     return {
         message: error instanceof Error ? error.message : 'An error occurred',
     };
@@ -442,3 +441,44 @@ export const createBookingAction = async (prevState: {
     }
     redirect('/bookings');
 };
+
+export const fetchBookings = async () => {
+    const user = await getAuthUser();
+    const bookings = await db.booking.findMany({
+        where: {
+            profileId: user.id,
+        },
+        include: {
+            property: {
+                select: {
+                    id: true,
+                    name: true,
+                    country: true,
+                },
+            },
+        },
+        orderBy: {
+            checkIn: 'asc',
+        },
+    });
+    return bookings;
+};
+
+export async function deleteBookingAction(prevState: { bookingId: string }) {
+    const { bookingId } = prevState;
+    const user = await getAuthUser();
+
+    try {
+        const result = await db.booking.delete({
+            where: {
+                id: bookingId,
+                profileId: user.id,
+            },
+        });
+
+        revalidatePath('/bookings');
+        return { message: 'Booking deleted successfully' };
+    } catch (error) {
+        return renderError(error);
+    }
+}

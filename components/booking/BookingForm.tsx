@@ -2,7 +2,9 @@ import { calculateTotals } from '@/utils/calculateTotals';
 import { Card, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useProperty } from '@/utils/store';
+import { formatQuantity } from '@/utils/format';
 import { formatCurrency } from '@/utils/format';
+import { format } from 'path';
 function BookingForm() {
     const { range, price } = useProperty((state) => state);
     const checkIn = range?.from as Date;
@@ -18,7 +20,7 @@ function BookingForm() {
         <Card className='p-4 mb-4'>
             <CardTitle className='mb-4'>Summary </CardTitle>
             <FormRow
-                label={`$${price} x ${nights} ${identifier}`}
+                label={`$${price} x ${formatQuantity(nights, 'night')}`}
                 amount={subTotal}
             />
             <FormRow label='Cleaning Fee' amount={cleaningFee} />
