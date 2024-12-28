@@ -22,7 +22,6 @@ function FormContainer({
         if (state.message) {
             toast({ description: state.message });
         }
-        console.log('FC:25-->useEffect');
     }, [state, toast]);
     return <form action={formAction}>{children}</form>;
 }

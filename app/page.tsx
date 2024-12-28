@@ -7,7 +7,7 @@ function HomePage({
 }: {
     searchParams: { category?: string; search?: string };
 }) {
-    console.log('SP:', searchParams);
+    // console.log('SP:', searchParams);
     return (
         <section>
             <CategoriesList
