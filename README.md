@@ -32,3 +32,5 @@ Udemy - Mastering Next.js
 ## REMEMBER - Do a local build before checking into main.
 
 <code>npm run build</code>
+
+## Bookings - completed.
