@@ -2,33 +2,31 @@ import { calculateTotals } from '@/utils/calculateTotals';
 import { Card, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useProperty } from '@/utils/store';
-import { formatQuantity } from '@/utils/format';
 import { formatCurrency } from '@/utils/format';
-import { format } from 'path';
 function BookingForm() {
     const { range, price } = useProperty((state) => state);
     const checkIn = range?.from as Date;
     const checkOut = range?.to as Date;
-    const { nights, subTotal, cleaningFee, serviceFee, tax, reservationTotal } =
+
+    const { totalNights, subTotal, cleaning, service, tax, orderTotal } =
         calculateTotals({
             checkIn,
             checkOut,
             price,
         });
-    const identifier = nights > 1 ? 'nights' : 'night';
     return (
-        <Card className='p-4 mb-4'>
-            <CardTitle className='mb-4'>Summary </CardTitle>
+        <Card className='p-8 mb-4'>
+            <CardTitle className='mb-8'>Summary </CardTitle>
             <FormRow
-                label={`$${price} x ${formatQuantity(nights, 'night')}`}
+                label={`$${price} x ${totalNights} nights`}
                 amount={subTotal}
             />
-            <FormRow label='Cleaning Fee' amount={cleaningFee} />
-            <FormRow label='Service Fee' amount={serviceFee} />
+            <FormRow label='Cleaning Fee' amount={cleaning} />
+            <FormRow label='Service Fee' amount={service} />
             <FormRow label='Tax' amount={tax} />
-            <Separator className='mt-2' />
-            <CardTitle className='mt-4'>
-                <FormRow label='Booking Total' amount={reservationTotal} />
+            <Separator className='mt-4' />
+            <CardTitle className='mt-8'>
+                <FormRow label='Booking Total' amount={orderTotal} />
             </CardTitle>
         </Card>
     );

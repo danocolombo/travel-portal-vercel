@@ -24,6 +24,7 @@ const getAuthUser = async () => {
 };
 
 const getAdminUser = async () => {
+    //could possibly modify this to check prisma meta role.
     const user = await getAuthUser();
     if (user.id !== process.env.ADMIN_USER_ID) redirect('/');
     return user;
@@ -608,7 +609,7 @@ export const updatePropertyImageAction = async (
     const propertyId = formData.get('id') as string;
 
     try {
-        const image = formData.get('image') as File;
+        const image = formData.get('image') as Blob;
         const validatedFields = validateWithZodSchema(imageSchema, { image });
         const fullPath = await uploadImage(validatedFields.image);
 
