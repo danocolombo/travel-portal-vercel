@@ -5,22 +5,17 @@ type BookingDetails = {
     checkOut: Date;
     price: number;
 };
-export function calculateTotals({ checkIn, checkOut, price }: BookingDetails) {
-    const nights = calculateDaysBetween({
-        checkIn,
-        checkOut,
-    });
-    const subTotal = nights * price;
-    const cleaningFee = 50;
-    const serviceFee = 30;
+
+export const calculateTotals = ({
+    checkIn,
+    checkOut,
+    price,
+}: BookingDetails) => {
+    const totalNights = calculateDaysBetween({ checkIn, checkOut });
+    const subTotal = totalNights * price;
+    const cleaning = 21;
+    const service = 40;
     const tax = subTotal * 0.1;
-    const reservationTotal = subTotal + cleaningFee + serviceFee + tax;
-    return {
-        nights,
-        subTotal,
-        cleaningFee,
-        serviceFee,
-        tax,
-        reservationTotal,
-    };
-}
+    const orderTotal = subTotal + cleaning + service + tax;
+    return { totalNights, subTotal, cleaning, service, tax, orderTotal };
+};
