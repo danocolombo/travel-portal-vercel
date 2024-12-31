@@ -42,7 +42,7 @@ function LinksDropdown() {
                 </SignedOut>
                 <SignedIn>
                     {links.map((link) => {
-                        console.log('link.label->>', link, '<<-');
+                        //if link is Admin && user is not admin, skip it.
                         if (link.label === 'Admin' && !isAdminUser) return null;
                         return (
                             <DropdownMenuItem key={link.href}>

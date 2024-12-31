@@ -14,7 +14,7 @@ const stripePromise = loadStripe(
 
 export default function CheckoutPage() {
     const searchParams = useSearchParams();
-
+    // get bookingId from query params in the URL
     const bookingId = searchParams.get('bookingId');
 
     const fetchClientSecret = useCallback(async () => {

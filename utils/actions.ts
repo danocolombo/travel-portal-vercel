@@ -415,6 +415,9 @@ export const createBookingAction = async (prevState: {
     checkOut: Date;
 }) => {
     const user = await getAuthUser();
+    //* NOTE THIS DELETES ALL EXISTING bookings that are not paid.
+    //* This could be issue if you have multiple users and two
+    //* users are trying to book a property at the same time.
     await db.booking.deleteMany({
         where: {
             profileId: user.id,
@@ -452,6 +455,7 @@ export const createBookingAction = async (prevState: {
     } catch (error) {
         return renderError(error);
     }
+    // send them to checkout with bookingId for payment
     redirect(`/checkout?bookingId=${bookingId}`);
 };
 
